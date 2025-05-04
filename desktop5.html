@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silab Tilapia Steak</title>
+    <link rel="icon" href="images\node-4.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f2c94c;
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            min-height: 500px;
+            padding: 2rem;
+            position: relative;
+            perspective: 1000px;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 100;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.5s;
+        }
+        
+        .back-button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+            transform: translateX(-5px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .product-container {
+            display: flex;
+            width: 100%;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.4), transparent);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .image-section {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+        
+        .background-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #222;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            transform: translateZ(20px);
+            opacity: 0;
+            animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation-delay: 0.3s;
+        }
+        
+        .product-image {
+            width: 250px;
+            height: 250px;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .product-info {
+            flex: 1;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 3;
+            opacity: 0;
+            transform: translateX(30px);
+            animation: slideInRight 1s ease forwards;
+            animation-delay: 0.5s;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 0;
+            height: 3px;
+            background-color: white;
+            animation: lineExpand 1.5s ease forwards;
+            animation-delay: 1.2s;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        
+        .learn-more {
+            align-self: flex-start;
+            background-color: #000;
+            color: white;
+            padding: 12px 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            border-radius: 0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            clip-path: polygon(0 0, 100% 0, 100% 70%, 90% 100%, 0 100%);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 1s;
+        }
+        
+        .learn-more:hover {
+            background-color: #333;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .pattern-text {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+            transform: rotate(-90deg);
+            opacity: 0.1;
+            z-index: 1;
+            animation: fadeIn 1.5s ease forwards;
+        }
+        
+        .pattern-line {
+            font-size: 2rem;
+            font-weight: bold;
+            white-space: nowrap;
+            color: #000;
+            opacity: 0;
+            animation: slideInText 20s linear infinite;
+        }
+        
+        .floating-circles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .circle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 10s infinite linear;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .product-container {
+                flex-direction: column;
+            }
+            
+            .product-info {
+                padding: 2rem;
+            }
+            
+            .pattern-text {
+                transform: none;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: translateZ(0) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateZ(20px) scale(1);
+            }
+        }
+        
+        @keyframes lineExpand {
+            from {
+                width: 0;
+            }
+            to {
+                width: 70%;
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--translateX), var(--translateY)) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1) translateZ(20px);
+            }
+            50% {
+                transform: scale(1.05) translateZ(30px);
+            }
+            100% {
+                transform: scale(1) translateZ(20px);
+            }
+        }
+        
+        @keyframes slideInText {
+            0% {
+                opacity: 0.1;
+                transform: translateX(-100%);
+            }
+            5% {
+                opacity: 0.6;
+            }
+            20% {
+                opacity: 0.6;
+            }
+            25% {
+                opacity: 0.1;
+            }
+            100% {
+                opacity: 0.1;
+                transform: translateX(100%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="products.html" class="back-button">
+        ← Back to Products
+    </a>
+    
+    <div class="container">
+        <div class="product-container">
+            <div class="image-section">
+                <div class="background-pattern"></div>
+                <div class="pattern-text">
+                    <div class="pattern-line">FISH STEAK FISH STEAK FISH STEAK FISH STEAK</div>
+                    <div class="pattern-line" style="animation-delay: 2s;">FISH STEAK FISH STEAK FISH STEAK FISH STEAK</div>
+                    <div class="pattern-line" style="animation-delay: 4s;">FISH STEAK FISH STEAK FISH STEAK FISH STEAK</div>
+                    <div class="pattern-line" style="animation-delay: 6s;">FISH STEAK FISH STEAK FISH STEAK FISH STEAK</div>
+                    <div class="pattern-line" style="animation-delay: 8s;">FISH STEAK FISH STEAK FISH STEAK FISH STEAK</div>
+                    <div class="pattern-line" style="animation-delay: 10s;">FISH STEAK FISH STEAK FISH STEAK FISH STEAK</div>
+                </div>
+                <div class="image-container">
+                    <img src="images/ts.jpg" alt="Silab Tilapia Steak jar" class="product-image" id="product-img">
+                </div>
+            </div>
+            
+            <div class="product-info">
+                <h1>Silab Tilapia Steak</h1>
+                <p>
+                    Silab Tilapia Steak is the non-spicy version made with tender tilapia fillets, 
+                    prepared for those who prefer mild flavors. It's best enjoyed as a ulam, paired 
+                    with rice for a satisfying meal.
+                </p>
+                <button class="learn-more" id="learn-more-btn">LEARN MORE</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="floating-circles" id="floating-circles"></div>
+    
+    <script>
+        // Create floating circles in the background
+        const createFloatingCircles = () => {
+            const container = document.getElementById('floating-circles');
+            const circleCount = 15;
+            
+            for (let i = 0; i < circleCount; i++) {
+                const circle = document.createElement('div');
+                circle.classList.add('circle');
+                
+                // Random size between 20px and 80px
+                const size = Math.random() * 60 + 20;
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                
+                // Random starting position
+                const startX = Math.random() * 100;
+                const startY = Math.random() * 100;
+                circle.style.left = `${startX}%`;
+                circle.style.top = `${startY}%`;
+                
+                // Random translation in animation
+                const translateX = (Math.random() - 0.5) * 200;
+                const translateY = (Math.random() - 0.5) * 200;
+                circle.style.setProperty('--translateX', `${translateX}px`);
+                circle.style.setProperty('--translateY', `${translateY}px`);
+                
+                // Random animation duration
+                const duration = Math.random() * 15 + 5;
+                circle.style.animationDuration = `${duration}s`;
+                
+                // Random animation delay
+                const delay = Math.random() * 10;
+                circle.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(circle);
+            }
+        };
+        
+        // 3D effect on mousemove
+        const container = document.querySelector('.container');
+        const imageContainer = document.querySelector('.image-container');
+        const productImg = document.getElementById('product-img');
+        
+        container.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            
+            imageContainer.style.transform = `translateZ(20px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+        
+        // Reset on mouseout
+        container.addEventListener('mouseleave', () => {
+            imageContainer.style.transform = 'translateZ(20px) rotateY(0deg) rotateX(0deg)';
+        });
+        
+        // Add hover animation to product image
+        productImg.addEventListener('mouseover', () => {
+            productImg.style.animation = 'pulse 2s infinite ease-in-out';
+        });
+        
+        productImg.addEventListener('mouseleave', () => {
+            productImg.style.animation = '';
+        });
+        
+        // Learn more button click effect
+        const learnMoreBtn = document.getElementById('learn-more-btn');
+        
+        learnMoreBtn.addEventListener('click', () => {
+            learnMoreBtn.style.transform = 'scale(0.95) translateY(0)';
+            
+            setTimeout(() => {
+                learnMoreBtn.style.transform = '';
+                alert('Thank you for your interest in Silab Tilapia Steak! More information coming soon.');
+            }, 200);
+        });
+        
+        // Create floating elements on page load
+        window.addEventListener('load', () => {
+            createFloatingCircles();
+        });
+        
+        // Add scroll animation
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            document.querySelectorAll('.pattern-line').forEach((line, index) => {
+                line.style.transform = `translateX(${(scrollPosition / 10) * (index % 2 === 0 ? 1 : -1)}%)`;
+            });
+        });
+    </script>
+</body>
+</html>

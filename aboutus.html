@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="icon" href="images\node-4.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;600&display=swap');
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            height: 100%;
+            overflow-x: hidden;
+        }
+        
+        .bg-container {
+            background-image: url('images/aboutus.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            filter: brightness(0.85);
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 54px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        
+        .navbar {
+            background-color: rgba(30, 30, 30, 0.7);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .social-icon-link {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 16px;
+        }
+        
+        .social-icon-img {
+            height: 24px;
+            width: auto;
+            vertical-align: middle;
+        }
+        
+        .content {
+            padding: 20px;
+            color: #fff;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .core-values {
+            margin-top: 30px;
+        }
+        
+        .core-values h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .core-values ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .core-values p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        
+        .core-values strong {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .spice {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: bold;
+            margin: 15px 0;
+            letter-spacing: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-container"></div>
+    <div class="overlay"></div>
+    
+    <nav class="navbar">
+        <a href="index.html">HOME</a>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/siklabco/" target="_blank" class="social-icon-link">
+                <img src="images/image-33.png" alt="Instagram" class="social-icon-img">
+                SIKLAB CO.
+            </a>
+            <a href="https://www.tiktok.com/@siklab.co?_t=..." target="_blank" class="social-icon-link">
+                <img src="images/image-37.png" alt="TikTok" class="social-icon-img">
+                SIKLAB CO.
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61575188215178" target="_blank" class="social-icon-link">
+                <img src="images/image-39.png" alt="Facebook" class="social-icon-img">
+                SIKLAB
+            </a>
+        </div>
+    </nav>
+    
+    <div class="content">
+        <div class="section">
+            <h1>VISION</h1>
+            <p>STRIVES TO BE A RECOGNIZED LEADER IN DELIVERING INNOVATIVE, HIGH-QUALITY, AND FLAVORFUL FOOD PRODUCTS THAT ENRICH EVERY MEAL AND INSPIRE CUSTOMER SATISFACTION WORLDWIDE.</p>
+        </div>
+        
+        <div class="section">
+            <h1>MISSION</h1>
+            <p>COMMITTED TO PRODUCING HIGH-QUALITY TILAPIA BASED THROUGH EXCELLENCE, INNOVATION, AND PASSION. WITH A STRONG TEAM-DRIVEN APPROACH, WE DELIVER UNIQUE, FLAVORFUL, AND NUTRITIOUS PRODUCTS THAT ELEVATE EVERY MEAL. OUR DEDICATION ENSURES CUSTOMER SATISFACTION AND CONTINUOUS IMPROVEMENT IN THE FOOD INDUSTRY.</p>
+        </div>
+        
+        <div class="section">
+            <h1>OUR CORE VALUES</h1>
+            <div class="spice">S.P.I.C.E.</div>
+            <div class="core-values">
+                <ul>
+                    <p><strong>SYNERGY</strong></p>
+                    <p><strong>PROGRESSIVENESS</strong></p>
+                    <p><strong>INNOVATION</strong></p>
+                    <p><strong>CUSTOMER-CENTRICITY</strong></p>
+                    <p><strong>EXCELLENCE</strong></p>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
